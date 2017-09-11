@@ -17,6 +17,25 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    /**
+     * 配置生成的apk打包的名称
+     */
+    applicationVariants.all { variant ->
+        variant.outputs.each { output ->
+            def outputFile = output.outputFile
+            if (outputFile != null && outputFile.name.endsWith('.apk')) {
+                if (variant.buildType.name.equals('debug')){
+                    def fileName = "step_debug.apk"
+                    output.outputFile = new File(outputFile.parent, fileName)
+                }else {
+                    // 输出apk名称为HeJiaoYu_GD_XXX.apk
+                    def fileName = "step_release.apk"
+                    output.outputFile = new File(outputFile.parent, fileName)
+                }
+            }
+        }
+    }
+
 }
 
 dependencies {
