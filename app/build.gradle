@@ -1,20 +1,30 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        config {
+            keyAlias '123456'
+            keyPassword '123456'
+            storeFile file('/Users/dugaolong/github/step/app/key.jks')
+            storePassword '123456'
+        }
+    }
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
     defaultConfig {
-        applicationId "com.dgl.www.step"
+        applicationId "cn.dgl.www.step"
         minSdkVersion 15
         targetSdkVersion 25
-        versionCode 1
-        versionName "1.0"
+        versionCode 4
+        versionName "4.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        signingConfig signingConfigs.config
     }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
         }
     }
     /**
@@ -24,10 +34,10 @@ android {
         variant.outputs.each { output ->
             def outputFile = output.outputFile
             if (outputFile != null && outputFile.name.endsWith('.apk')) {
-                if (variant.buildType.name.equals('debug')){
+                if (variant.buildType.name.equals('debug')) {
                     def fileName = "step_debug.apk"
                     output.outputFile = new File(outputFile.parent, fileName)
-                }else {
+                } else {
                     // 输出apk名称为HeJiaoYu_GD_XXX.apk
                     def fileName = "step_release.apk"
                     output.outputFile = new File(outputFile.parent, fileName)
@@ -35,11 +45,11 @@ android {
             }
         }
     }
-
+    productFlavors {
+    }
 }
 
 dependencies {
-
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.orhanobut:logger:1.8'
