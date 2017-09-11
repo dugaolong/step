@@ -1,74 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-package="cn.dgl.www.step">
+    package="cn.dgl.www.step">
 
-<!--计歩-->
-<uses-permission android:name="android.permission.VIBRATE" />
-<uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <!--计歩-->
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
 
-<uses-feature android:name="android.hardware.sensor.accelerometer" />
+    <uses-feature android:name="android.hardware.sensor.accelerometer" />
 
-<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-<uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
 
-<uses-feature
-    android:name="android.hardware.sensor.stepcounter"
-    android:required="true" />
-<uses-feature
-    android:name="android.hardware.sensor.stepdetector"
-    android:required="true" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <!-- 如果需要精确定位的话请加上此权限 -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
-<application
-    android:name="cn.dgl.www.step.app.MyApplication"
-    android:allowBackup="true"
-    android:icon="@drawable/logo"
-    android:label="@string/app_name"
-    android:supportsRtl="true"
-    android:theme="@style/AppTheme">
-    <activity android:name="cn.dgl.www.step.activity.MainActivity" android:launchMode="singleTask">
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
+    <uses-feature
+        android:name="android.hardware.sensor.stepcounter"
+        android:required="true" />
+    <uses-feature
+        android:name="android.hardware.sensor.stepdetector"
+        android:required="true" />
 
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
-    </activity>
-    <activity
-        android:name="cn.dgl.www.step.activity.SetPlanActivity"
-        android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-    <activity
-        android:name="cn.dgl.www.step.activity.HistoryActivity"
-        android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+    <application
+        android:name="cn.dgl.www.step.app.MyApplication"
+        android:allowBackup="true"
+        android:icon="@drawable/logo"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
 
-    <service
-        android:name="cn.dgl.www.step.step.service.StepService"
-        android:priority="1000">
-        <intent-filter>
-            <!-- 系统启动完成后会调用-->
-            <action android:name="android.intent.action.BOOT_COMPLETED" />
-            <action android:name="android.intent.action.DATE_CHANGED" />
-            <action android:name="android.intent.action.MEDIA_MOUNTED" />
-            <action android:name="android.intent.action.USER_PRESENT" />
-            <action android:name="android.intent.action.ACTION_TIME_TICK" />
-            <action android:name="android.intent.action.ACTION_POWER_CONNECTED" />
-            <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED" />
-        </intent-filter>
-    </service>
-    <service
-        android:name="cn.dgl.www.step.pedometer.StepsDetectService"
-        android:priority="1000"
-        android:process="..pedometer.StepsDetectService">
-        <intent-filter>
-            <!-- 系统启动完成后会调用-->
-            <action android:name="android.intent.action.BOOT_COMPLETED" />
-            <action android:name="android.intent.action.DATE_CHANGED" />
-            <action android:name="android.intent.action.MEDIA_MOUNTED" />
-            <action android:name="android.intent.action.USER_PRESENT" />
-            <action android:name="android.intent.action.ACTION_TIME_TICK" />
-            <action android:name="android.intent.action.ACTION_POWER_CONNECTED" />
-            <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED" />
-        </intent-filter>
-    </service>
+        <activity android:name=".SplashActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
 
-</application>
+        <activity
+            android:name=".activity.MainActivity"
+            android:launchMode="singleTask">
+        </activity>
+        <activity
+            android:name=".activity.SetPlanActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity
+            android:name=".activity.HistoryActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+
+        <service
+            android:name=".step.service.StepService"
+            android:priority="1000">
+            <intent-filter>
+                <!-- 系统启动完成后会调用-->
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.DATE_CHANGED" />
+                <action android:name="android.intent.action.MEDIA_MOUNTED" />
+                <action android:name="android.intent.action.USER_PRESENT" />
+                <action android:name="android.intent.action.ACTION_TIME_TICK" />
+                <action android:name="android.intent.action.ACTION_POWER_CONNECTED" />
+                <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED" />
+            </intent-filter>
+        </service>
+        <service
+            android:name=".pedometer.StepsDetectService"
+            android:priority="1000"
+            android:process="..pedometer.StepsDetectService">
+            <intent-filter>
+                <!-- 系统启动完成后会调用-->
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.DATE_CHANGED" />
+                <action android:name="android.intent.action.MEDIA_MOUNTED" />
+                <action android:name="android.intent.action.USER_PRESENT" />
+                <action android:name="android.intent.action.ACTION_TIME_TICK" />
+                <action android:name="android.intent.action.ACTION_POWER_CONNECTED" />
+                <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED" />
+            </intent-filter>
+        </service>
+
+        <!-- 广点通 -->
+        <service
+            android:name="com.qq.e.comm.DownloadService"
+            android:exported="false" />
+        <activity
+            android:name="com.qq.e.ads.ADActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenSize" />
+    </application>
 
 </manifest>
