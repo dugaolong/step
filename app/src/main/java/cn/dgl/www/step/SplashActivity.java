@@ -44,6 +44,9 @@ public class SplashActivity extends Activity implements SplashADListener {
     public static final String SplashPosID = "";
     private static final String TAG = "SplashActivity";
 
+    private String adaaaa;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
