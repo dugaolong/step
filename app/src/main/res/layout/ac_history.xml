@@ -60,6 +60,8 @@
     <ListView
         android:id="@+id/lv"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:divider="@color/grey"
+        android:dividerHeight="1dp"/>
 
 </LinearLayout>

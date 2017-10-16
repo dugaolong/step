@@ -86,13 +86,6 @@
             </intent-filter>
         </service>
 
-        <!-- 广点通 -->
-        <service
-            android:name="com.qq.e.comm.DownloadService"
-            android:exported="false" />
-        <activity
-            android:name="com.qq.e.ads.ADActivity"
-            android:configChanges="keyboard|keyboardHidden|orientation|screenSize" />
     </application>
 
 </manifest>
