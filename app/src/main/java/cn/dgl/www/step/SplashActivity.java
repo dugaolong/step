@@ -11,17 +11,12 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.qq.e.ads.splash.SplashAD;
-import com.qq.e.ads.splash.SplashADListener;
-import com.qq.e.comm.util.AdError;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,21 +26,14 @@ import cn.dgl.www.step.activity.MainActivity;
 /**
  * Created by dugaolong on 17/6/29.
  */
-public class SplashActivity extends Activity implements SplashADListener {
+public class SplashActivity extends Activity  {
 
     private Context mContext;
     public boolean canJump = false;
-    private static final String SKIP_TEXT = "点击跳过 %d";
-    private SplashAD splashAD;
     private ViewGroup container;
     private TextView skipView;
     private ImageView splashHolder;
-    public static final String APPID = "";
-    public static final String SplashPosID = "";
     private static final String TAG = "SplashActivity";
-
-    private String adaaaa;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +50,7 @@ public class SplashActivity extends Activity implements SplashADListener {
             checkAndRequestPermission();
         } else {
             // 如果是Android6.0以下的机器，默认在安装时获得了所有权限，可以直接调用SDK
-            fetchSplashAD(this, container, APPID, SplashPosID, this, 0);
+
         }
 
     }
@@ -111,7 +99,8 @@ public class SplashActivity extends Activity implements SplashADListener {
 
         // 权限都已经有了，那么直接调用SDK
         if (lackedPermission.size() == 0) {
-            fetchSplashAD(this, container, APPID, SplashPosID, this, 0);
+            //调用SDK
+
         } else {
             // 请求所缺少的权限，在onRequestPermissionsResult中再看是否获得权限，如果获得权限就可以调用SDK，否则不要调用SDK。
             String[] requestPermissions = new String[lackedPermission.size()];
@@ -133,7 +122,8 @@ public class SplashActivity extends Activity implements SplashADListener {
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == 1024 && hasAllPermissionsGranted(grantResults)) {
-            fetchSplashAD(this, container, APPID, SplashPosID, this, 0);
+            //调用SDK
+
         } else {
             // 如果用户没有授权，那么应该说明意图，引导用户去设置里面授权。
             Toast.makeText(this, "应用缺少必要的权限！请点击\"权限\"，打开所需要的权限。", Toast.LENGTH_LONG).show();
@@ -144,58 +134,7 @@ public class SplashActivity extends Activity implements SplashADListener {
         }
     }
 
-    /**
-     * 拉取开屏广告，开屏广告的构造方法有3种，详细说明请参考开发者文档。
-     *
-     * @param activity        展示广告的activity
-     * @param adContainer     展示广告的大容器
-     * @param appId           应用ID
-     * @param posId           广告位ID
-     * @param adListener      广告状态监听器
-     * @param fetchDelay      拉取广告的超时时长：取值范围[3000, 5000]，设为0表示使用广点通SDK默认的超时时长。
-     */
-    private void fetchSplashAD(Activity activity, ViewGroup adContainer,
-                               String appId, String posId, SplashADListener adListener, int fetchDelay) {
-        splashAD = new SplashAD(activity, adContainer, appId, posId, adListener, fetchDelay);
-    }
 
-    @Override
-    public void onADPresent() {
-        Log.i(TAG, "SplashADPresent");
-        splashHolder.setVisibility(View.INVISIBLE); // 广告展示后一定要把预设的开屏图片隐藏起来
-    }
-
-    @Override
-    public void onADClicked() {
-        Log.i(TAG, "SplashADClicked");
-    }
-
-    /**
-     * 倒计时回调，返回广告还将被展示的剩余时间。
-     * 通过这个接口，开发者可以自行决定是否显示倒计时提示，或者还剩几秒的时候显示倒计时
-     *
-     * @param millisUntilFinished 剩余毫秒数
-     */
-    @Override
-    public void onADTick(long millisUntilFinished) {
-        Log.i(TAG, "SplashADTick " + millisUntilFinished + "ms");
-        skipView.setText(String.format(SKIP_TEXT, Math.round(millisUntilFinished / 1000f)));
-    }
-
-    @Override
-    public void onADDismissed() {
-        Log.i(TAG, "SplashADDismissed");
-        next();
-    }
-
-    @Override
-    public void onNoAD(AdError adError) {
-        Log.i(TAG, "LoadSplashADFail, eCode=" + adError.getErrorCode());
-        Log.i(TAG, "LoadSplashADFail, eMsg=" + adError.getErrorMsg());
-        /** 如果加载广告失败，则直接跳转 */
-        this.startActivity(new Intent(this, MainActivity.class));
-        this.finish();
-    }
 
     /**
      * 设置一个变量来控制当前开屏页面是否可以跳转，当开屏广告为普链类广告时，点击会打开一个广告落地页，此时开发者还不能打开自己的App主页。当从广告落地页返回以后，
