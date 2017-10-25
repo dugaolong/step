@@ -17,7 +17,6 @@ android {
         targetSdkVersion 25
         versionCode 1710161121
         versionName "2.0.1"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         signingConfig signingConfigs.config
     }
     buildTypes {
@@ -25,6 +24,11 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.config
+        }
+    }
+    sourceSets {
+        main {
+            assets.srcDirs = ['assets']
         }
     }
     /**

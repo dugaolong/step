@@ -11,12 +11,16 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.xiaomi.ad.SplashAdListener;
+import com.xiaomi.ad.adView.SplashAd;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +38,8 @@ public class SplashActivity extends Activity  {
     private TextView skipView;
     private ImageView splashHolder;
     private static final String TAG = "SplashActivity";
+    private static final String POSITION_ID = "0b4b44106c3f41b6a3f87df548ba73f6";//
+    private ViewGroup mContainer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +59,38 @@ public class SplashActivity extends Activity  {
 
         }
 
+        mContainer = (ViewGroup) findViewById(R.id.splash_container);
+        SplashAd splashAd = new SplashAd(this, mContainer, R.drawable.splash_default_picture, new SplashAdListener() {
+            @Override
+            public void onAdPresent() {
+                // 开屏广告展示
+                Log.d(TAG, "onAdPresent");
+            }
+
+            @Override
+            public void onAdClick() {
+                //用户点击了开屏广告
+                Log.d(TAG, "onAdClick");
+                startActivity(new Intent(SplashActivity.this,MainActivity.class));
+                finish();
+            }
+
+            @Override
+            public void onAdDismissed() {
+                //这个方法被调用时，表示从开屏广告消失。
+                Log.d(TAG, "onAdDismissed");
+                startActivity(new Intent(SplashActivity.this,MainActivity.class));
+                finish();
+            }
+
+            @Override
+            public void onAdFailed(String s) {
+                Log.d(TAG, "onAdFailed, message: " + s);
+                startActivity(new Intent(SplashActivity.this,MainActivity.class));
+                finish();
+            }
+        });
+        splashAd.requestAd(POSITION_ID);
     }
 
     @Override
