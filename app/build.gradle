@@ -15,8 +15,8 @@ android {
         applicationId "cn.dgl.www.step"
         minSdkVersion 15
         targetSdkVersion 25
-        versionCode 1710161121
-        versionName "2.0.1"
+        versionCode 1710251740
+        versionName "2.0.2"
         signingConfig signingConfigs.config
     }
     buildTypes {
