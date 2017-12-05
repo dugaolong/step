@@ -26,11 +26,6 @@ android {
             signingConfig signingConfigs.config
         }
     }
-    sourceSets {
-        main {
-            assets.srcDirs = ['assets']
-        }
-    }
     /**
      * 配置生成的apk打包的名称
      */
@@ -53,8 +48,19 @@ android {
     }
 }
 
+repositories {
+    flatDir {
+        dirs 'libs'
+    }
+}
+
+
 dependencies {
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.orhanobut:logger:1.8'
+    // name 为上一步导入SDK中导入到工程的aar文件名去除文件后缀的字符串
+    // 比如上一步导入SDK中导入到工程的aar文件名为 YoumiSdk_v7.2.1_2017-05-04.aar，
+    // 那么这里应该这样配置 compile name: 'YoumiSdk_v7.2.1_2017-05-04', ext: 'aar'
+    compile name: 'YoumiSdk_v7.2.0_2017-05-08', ext: 'aar'
 }

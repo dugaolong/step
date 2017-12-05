@@ -7,20 +7,23 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.util.Log;
 import android.view.KeyEvent;
-import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.xiaomi.ad.SplashAdListener;
-import com.xiaomi.ad.adView.SplashAd;
+import net.youmi.android.AdManager;
+import net.youmi.android.nm.cm.ErrorCode;
+import net.youmi.android.nm.sp.SplashViewSettings;
+import net.youmi.android.nm.sp.SpotListener;
+import net.youmi.android.nm.sp.SpotManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,78 +37,89 @@ public class SplashActivity extends Activity  {
 
     private Context mContext;
     public boolean canJump = false;
-    private ViewGroup container;
+//    private ViewGroup container;
     private TextView skipView;
     private ImageView splashHolder;
     private static final String TAG = "SplashActivity";
-    private static final String POSITION_ID = "0b4b44106c3f41b6a3f87df548ba73f6";//
-    private ViewGroup mContainer;
+//    private ViewGroup mContainer;
+private PermissionHelper mPermissionHelper;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        // 设置全屏
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        // 移除标题栏
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
         mContext = this;
         setContentView(R.layout.splash);
 
         skipView = (TextView) findViewById(R.id.skip_view);
 
-        container = (ViewGroup) findViewById(R.id.splash_container);
+//        container = (ViewGroup) findViewById(R.id.splash_container);
         splashHolder = (ImageView) findViewById(R.id.splash_holder);
-        // 如果targetSDKVersion >= 23，就要申请好权限。如果您的App没有适配到Android6.0（即targetSDKVersion < 23），那么只需要在这里直接调用fetchSplashAD接口。
-        if (Build.VERSION.SDK_INT >= 23) {
-            checkAndRequestPermission();
-        } else {
-            // 如果是Android6.0以下的机器，默认在安装时获得了所有权限，可以直接调用SDK
-
-        }
-
-        mContainer = (ViewGroup) findViewById(R.id.splash_container);
-        SplashAd splashAd = new SplashAd(this, mContainer, R.drawable.splash_default_picture, new SplashAdListener() {
+        // 当系统为6.0以上时，需要申请权限
+        mPermissionHelper = new PermissionHelper(this);
+        mPermissionHelper.setOnApplyPermissionListener(new PermissionHelper.OnApplyPermissionListener() {
             @Override
-            public void onAdPresent() {
-                // 开屏广告展示
-                Log.d(TAG, "onAdPresent");
-            }
-
-            @Override
-            public void onAdClick() {
-                //用户点击了开屏广告
-                Log.d(TAG, "onAdClick");
-                startActivity(new Intent(SplashActivity.this,MainActivity.class));
-                finish();
-            }
-
-            @Override
-            public void onAdDismissed() {
-                //这个方法被调用时，表示从开屏广告消失。
-                Log.d(TAG, "onAdDismissed");
-                startActivity(new Intent(SplashActivity.this,MainActivity.class));
-                finish();
-            }
-
-            @Override
-            public void onAdFailed(String s) {
-                Log.d(TAG, "onAdFailed, message: " + s);
-                startActivity(new Intent(SplashActivity.this,MainActivity.class));
-                finish();
+            public void onAfterApplyAllPermission() {
+                Log.i(TAG, "All of requested permissions has been granted, so run app logic.");
+                runApp();
             }
         });
-        splashAd.requestAd(POSITION_ID);
+        if (Build.VERSION.SDK_INT < 23) {
+            // 如果系统版本低于23，直接跑应用的逻辑
+            Log.d(TAG, "The api level of system is lower than 23, so run app logic directly.");
+            runApp();
+        } else {
+            // 如果权限全部申请了，那就直接跑应用逻辑
+            if (mPermissionHelper.isAllRequestedPermissionGranted()) {
+                Log.d(TAG, "All of requested permissions has been granted, so run app logic directly.");
+                runApp();
+            } else {
+                // 如果还有权限为申请，而且系统版本大于23，执行申请权限逻辑
+                Log.i(TAG, "Some of requested permissions hasn't been granted, so apply permissions first.");
+                mPermissionHelper.applyPermissions();
+            }
+        }
+
+//        mContainer = (ViewGroup) findViewById(R.id.splash_container);
+
+    }
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        mPermissionHelper.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        mPermissionHelper.onActivityResult(requestCode, resultCode, data);
+    }
+
+    /**
+     * 跑应用的逻辑
+     */
+    private void runApp() {
+        //初始化SDK
+        AdManager.getInstance(mContext).init("55747da8a977b7eb", "2bc9a7d896756b7e", true);
+//		preloadAd();
+        setupSplashAd(); // 如果需要首次展示开屏，请注释掉本句代码
     }
 
     @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
         if (event.getKeyCode() == KeyEvent.KEYCODE_BACK) {
             // 捕获back键，在展示广告期间按back键，不跳过广告
-            if (container.getVisibility() == View.VISIBLE) {
-                return true;
-            }
+//            if (container.getVisibility() == View.VISIBLE) {
+//                return true;
+//            }
         }
         return super.dispatchKeyEvent(event);
-    }
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
     }
 
 
@@ -156,23 +170,6 @@ public class SplashActivity extends Activity  {
         return true;
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == 1024 && hasAllPermissionsGranted(grantResults)) {
-            //调用SDK
-
-        } else {
-            // 如果用户没有授权，那么应该说明意图，引导用户去设置里面授权。
-            Toast.makeText(this, "应用缺少必要的权限！请点击\"权限\"，打开所需要的权限。", Toast.LENGTH_LONG).show();
-            Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-            intent.setData(Uri.parse("package:" + getPackageName()));
-            startActivity(intent);
-            finish();
-        }
-    }
-
-
 
     /**
      * 设置一个变量来控制当前开屏页面是否可以跳转，当开屏广告为普链类广告时，点击会打开一个广告落地页，此时开发者还不能打开自己的App主页。当从广告落地页返回以后，
@@ -209,5 +206,193 @@ public class SplashActivity extends Activity  {
             return true;
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+//    /**
+//     * 预加载广告
+//     */
+//    private void preloadAd() {
+//        // 注意：不必每次展示插播广告前都请求，只需在应用启动时请求一次
+//        SpotManager.getInstance(mContext).requestSpot(new SpotRequestListener() {
+//            @Override
+//            public void onRequestSuccess() {
+//                logInfo("请求插播广告成功");
+//                //				// 应用安装后首次展示开屏会因为本地没有数据而跳过
+//                //              // 如果开发者需要在首次也能展示开屏，可以在请求广告成功之前展示应用的logo，请求成功后再加载开屏
+//                //				setupSplashAd();
+//            }
+//
+//            @Override
+//            public void onRequestFailed(int errorCode) {
+//                logError("请求插播广告失败，errorCode: %s", errorCode);
+//                switch (errorCode) {
+//                    case ErrorCode.NON_NETWORK:
+//                        showShortToast("网络异常");
+//                        break;
+//                    case ErrorCode.NON_AD:
+//                        showShortToast("暂无视频广告");
+//                        break;
+//                    default:
+//                        showShortToast("请稍后再试");
+//                        break;
+//                }
+//            }
+//        });
+//    }
+
+    /**
+     * 设置开屏广告
+     */
+    private void setupSplashAd() {
+        // 创建开屏容器
+        final RelativeLayout splashLayout = (RelativeLayout) findViewById(R.id.rl_splash);
+        RelativeLayout.LayoutParams params =
+                new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        params.addRule(RelativeLayout.ABOVE, R.id.view_divider);
+
+        // 对开屏进行设置
+        SplashViewSettings splashViewSettings = new SplashViewSettings();
+        //		// 设置是否展示失败自动跳转，默认自动跳转
+        //		splashViewSettings.setAutoJumpToTargetWhenShowFailed(false);
+        // 设置跳转的窗口类
+        splashViewSettings.setTargetClass(MainActivity.class);
+        // 设置开屏的容器
+        splashViewSettings.setSplashViewContainer(splashLayout);
+
+        // 展示开屏广告
+        SpotManager.getInstance(mContext)
+                .showSplash(mContext, splashViewSettings, new SpotListener() {
+
+                    @Override
+                    public void onShowSuccess() {
+                        logInfo("开屏展示成功");
+                    }
+
+                    @Override
+                    public void onShowFailed(int errorCode) {
+                        logError("开屏展示失败");
+                        switch (errorCode) {
+                            case ErrorCode.NON_NETWORK:
+                                logError("网络异常");
+                                break;
+                            case ErrorCode.NON_AD:
+                                logError("暂无开屏广告");
+                                break;
+                            case ErrorCode.RESOURCE_NOT_READY:
+                                logError("开屏资源还没准备好");
+                                break;
+                            case ErrorCode.SHOW_INTERVAL_LIMITED:
+                                logError("开屏展示间隔限制");
+                                break;
+                            case ErrorCode.WIDGET_NOT_IN_VISIBILITY_STATE:
+                                logError("开屏控件处在不可见状态");
+                                break;
+                            default:
+                                logError("errorCode: %d", errorCode);
+                                break;
+                        }
+                    }
+
+                    @Override
+                    public void onSpotClosed() {
+                        logDebug("开屏被关闭");
+                    }
+
+                    @Override
+                    public void onSpotClicked(boolean isWebPage) {
+                        logDebug("开屏被点击");
+                        logInfo("是否是网页广告？%s", isWebPage ? "是" : "不是");
+                    }
+                });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        // 开屏展示界面的 onDestroy() 回调方法中调用
+        SpotManager.getInstance(mContext).onDestroy();
+    }
+
+    /**
+     * 打印调试级别日志
+     *
+     * @param format
+     * @param args
+     */
+    protected void logDebug(String format, Object... args) {
+        logMessage(Log.DEBUG, format, args);
+    }
+
+    /**
+     * 打印信息级别日志
+     *
+     * @param format
+     * @param args
+     */
+    protected void logInfo(String format, Object... args) {
+        logMessage(Log.INFO, format, args);
+    }
+
+    /**
+     * 打印错误级别日志
+     *
+     * @param format
+     * @param args
+     */
+    protected void logError(String format, Object... args) {
+        logMessage(Log.ERROR, format, args);
+    }
+
+    /**
+     * 展示短时Toast
+     *
+     * @param format
+     * @param args
+     */
+    protected void showShortToast(String format, Object... args) {
+        showToast(Toast.LENGTH_SHORT, format, args);
+    }
+
+    /**
+     * 展示长时Toast
+     *
+     * @param format
+     * @param args
+     */
+    protected void showLongToast(String format, Object... args) {
+        showToast(Toast.LENGTH_LONG, format, args);
+    }
+
+    /**
+     * 打印日志
+     *
+     * @param level
+     * @param format
+     * @param args
+     */
+    private void logMessage(int level, String format, Object... args) {
+        String formattedString = String.format(format, args);
+        switch (level) {
+            case Log.DEBUG:
+                Log.d(TAG, formattedString);
+                break;
+            case Log.INFO:
+                Log.i(TAG, formattedString);
+                break;
+            case Log.ERROR:
+                Log.e(TAG, formattedString);
+                break;
+        }
+    }
+
+    /**
+     * 展示Toast
+     *
+     * @param duration
+     * @param format
+     * @param args
+     */
+    private void showToast(int duration, String format, Object... args) {
+        Toast.makeText(mContext, String.format(format, args), duration).show();
     }
 }

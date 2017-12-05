@@ -4,11 +4,22 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <FrameLayout
-        android:id="@+id/splash_container"
+    <RelativeLayout
+        android:id="@+id/rl_splash"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#ffffff" />
+        android:layout_marginBottom="80dp"
+        >
+
+        <View
+            android:id="@+id/view_divider"
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/bg_divider"
+            />
+    </RelativeLayout >
+
 
     <!-- 3.自定义跳过按钮区域：开发者可以根据需要自己实现不同样式的跳过按钮 -->
     <!-- 注意1：根据广告法规定，跳过按钮必须在屏幕当中出现。因此广告展示的时候，必须让将SkipView显示出来，即visible，否则将SDK将不展示广告，返回错误码608。。 -->
