@@ -106,7 +106,8 @@ private PermissionHelper mPermissionHelper;
      */
     private void runApp() {
         //初始化SDK
-        AdManager.getInstance(mContext).init("55747da8a977b7eb", "2bc9a7d896756b7e", true);
+//        AdManager.getInstance(mContext).init("55747da8a977b7eb", "2bc9a7d896756b7e", true);
+        AdManager.getInstance(mContext).init("694bbd3efca25736", "11716621fa34f853", true);
 //		preloadAd();
         setupSplashAd(); // 如果需要首次展示开屏，请注释掉本句代码
     }
