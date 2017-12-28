@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.os.Process;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
@@ -129,5 +130,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (isBind) {
             this.unbindService(conn);
         }
+        Process.killProcess(android.os.Process.myPid());
+        System.exit(0);
     }
 }
