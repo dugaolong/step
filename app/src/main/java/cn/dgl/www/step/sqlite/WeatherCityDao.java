@@ -21,7 +21,7 @@ public class WeatherCityDao {
         List<CenterWeatherCityCode> list = new ArrayList<CenterWeatherCityCode>();
         helper = new MySqliteHelper(context, "CenterWeatherCityCode.db", null, 1);
         SQLiteDatabase db = helper.getWritableDatabase();
-        Cursor cursor = db.rawQuery("select * from t_student", null);
+        Cursor cursor = db.rawQuery("select * from city_code", null);
         if (cursor == null) {
             return null;
         }
@@ -45,21 +45,18 @@ public class WeatherCityDao {
         return list;
     }
 
-    public CenterWeatherCityCode getCityByCityName(String cityName) {
+    public CenterWeatherCityCode getCityByCityName(String district) {
         CenterWeatherCityCode cwcc =null;
         helper = new MySqliteHelper(context, "CenterWeatherCityCode.db", null, 1);
         SQLiteDatabase db = helper.getWritableDatabase();
-        Cursor cursor = db.query("CenterWeatherCityCode",
+//        Cursor cursor=db.rawQuery("select * from city_code where cityName=?", new String[]{cityName});
+        Cursor cursor = db.query("city_code",
         new String[]{"countryID","countryName","countryEN","areaID","areaName","areaEN","cityID","cityName","cityEN","townID","townName","townEN"},
-                "cityName=?", new String[]{cityName},
+                "townName=?", new String[]{district},
                 null, null, null);
-
         if(cursor == null){
-
             return null;
-
         }
-
         while (cursor.moveToNext()) {
             cwcc = new CenterWeatherCityCode(
                     cursor.getString(0),

@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
 import com.baidu.location.BDAbstractLocationListener;
 import com.baidu.location.BDLocation;
 import com.baidu.location.LocationClient;
@@ -28,6 +29,7 @@ import java.net.URL;
 import cn.dgl.www.step.R;
 import cn.dgl.www.step.sqlite.CenterWeatherCityCode;
 import cn.dgl.www.step.sqlite.WeatherCityDao;
+import cn.dgl.www.step.sqlite.WeatherData;
 
 /**
  * Created by dugaolong on 17/12/28.
@@ -35,7 +37,7 @@ import cn.dgl.www.step.sqlite.WeatherCityDao;
 
 public class LocationActivity extends Activity {
 
-    private TextView location_data, weather_data;
+    private TextView location_data, database_data, weather_data;
     public LocationClient mLocationClient = null;
     private MyLocationListener myListener = new MyLocationListener();
     private Handler handler = new Handler() {
@@ -47,13 +49,14 @@ public class LocationActivity extends Activity {
                     weather_data.setText(re);
                     break;
                 case 1:
-                    String we = (String) msg.obj;
-                    weather_data.setText(we);
+                    WeatherData wd = (WeatherData) msg.obj;
+                    weather_data.setText(wd.getWeather().get(0).getCity_name());
                     break;
             }
         }
     };
-    private String city;
+    private String district;
+    private String townID;
     private String ak = "2llxErTgU6XQd2DxTGe35Q7M4hfjqLMG";
     private String SHA1 = "39:EA:65:EC:CA:EC:F8:82:E3:6C:14:F5:C4:B3:50:43:A9:B7:AE:0A";
 
@@ -63,6 +66,7 @@ public class LocationActivity extends Activity {
         setContentView(R.layout.location);
         location_data = (TextView) findViewById(R.id.location_data);
         weather_data = (TextView) findViewById(R.id.weather_data);
+        database_data = (TextView) findViewById(R.id.database_data);
 
         //BDAbstractLocationListener为7.2版本新增的Abstract类型的监听接口
         //原有BDLocationListener接口暂时同步保留。具体介绍请参考后文中的说明
@@ -98,7 +102,7 @@ public class LocationActivity extends Activity {
             String addr = location.getAddrStr();    //获取详细地址信息
             String country = location.getCountry();    //获取国家
             String province = location.getProvince();    //获取省份
-            city = location.getCity();    //获取城市
+            String city = location.getCity();    //获取城市
             String district = location.getDistrict();    //获取区县
             String street = location.getStreet();    //获取街道信息
             location_data.setText("addr：" + addr + "\n"
@@ -108,17 +112,20 @@ public class LocationActivity extends Activity {
                     + "district：" + district + "\n"
                     + "street：" + street + "\n"
             );
-//            getCityByCityName(city);
+            getCityByCityName(district);
             sendRequestWithHttpClient();
         }
     }
 
-    public void getCityByCityName(String cityName){
+    public void getCityByCityName(String district){
         WeatherCityDao dao = new WeatherCityDao(getApplicationContext());
-        cityName = cityName.substring(0,cityName.length()-1);
-        CenterWeatherCityCode cwcc = dao.getCityByCityName(cityName);
-        weather_data.setText(
-                 "cityName：" + cityName + "\n"+
+        district = district.substring(0,district.length()-1);
+        CenterWeatherCityCode cwcc = dao.getCityByCityName(district);
+        if(cwcc !=null){
+            townID = cwcc.getTownID();
+        }
+        database_data.setText(
+                 "district：" + district + "\n"+
                  "TownID()：" + cwcc.getTownID());
     }
     private void sendRequestWithHttpClient() {
@@ -131,7 +138,7 @@ public class LocationActivity extends Activity {
 //                            + "&output=json&ak=" + LocationActivity.this.ak +
 //                            "&mcode=" + SHA1 + ";" + LocationActivity.this.getPackageName() + "");
 //                    URL url = new URL("http://www.sojson.com/open/api/weather/json.shtml?city=西安");
-                    URL url = new URL("http://tj.nineton.cn/Heart/index/all?city=CHSH000000&language=zh-chs&unit=c&aqi=city&alarm=1&key=78928e706123c1a8f1766f062bc8676b");
+                    URL url = new URL("http://tj.nineton.cn/Heart/index/all?city="+townID+"&language=zh-chs&unit=c&aqi=city&alarm=1&key=78928e706123c1a8f1766f062bc8676b");
                     connection = (HttpURLConnection) url.openConnection();
                     connection.setRequestMethod("GET");
                     connection.setConnectTimeout(5000);
@@ -144,13 +151,14 @@ public class LocationActivity extends Activity {
                         response.append(line);
                     }
                     Log.i("TAG", response.toString());
+                    WeatherData wd = JSON.parseObject(response.toString(), WeatherData.class);
                     Message message = new Message();
                     message.what = 1;
-                    message.obj = unicode2String(response.toString());
+                    message.obj = wd;
                     handler.sendMessage(message);
 
 
-                    parseJSONObjectOrJSONArray(unicode2String(response.toString()));
+//                    parseJSONObjectOrJSONArray(unicode2String(response.toString()));
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
                 } catch (IOException e) {

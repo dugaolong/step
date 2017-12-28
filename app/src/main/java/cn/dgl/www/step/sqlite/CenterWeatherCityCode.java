@@ -3,6 +3,7 @@ package cn.dgl.www.step.sqlite;
 import java.io.Serializable;
 
 /**
+ * 天气预报的地区bean
  * Created by dugaolong on 17/12/28.
  */
 
