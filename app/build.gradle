@@ -20,6 +20,7 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         signingConfig signingConfigs.config
     }
+    sourceSets { main { assets.srcDirs = ['src/assets', 'src/assets/']}}
     buildTypes {
         release {
             minifyEnabled false
