@@ -1,5 +1,6 @@
 package cn.dgl.www.step.lbs;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -8,6 +9,7 @@ import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
+import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 
@@ -34,7 +36,9 @@ import cn.dgl.www.step.sqlite.WeatherData;
 
 public class WeatherShowActivity extends AppCompatActivity {
 
+    private WeatherData mWeatherData = null;
     private String city;
+    private TextView tv_title,publish_time;
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -47,23 +51,39 @@ public class WeatherShowActivity extends AppCompatActivity {
                 case 1:
                     WeatherData wd = (WeatherData) msg.obj;
                     Log.i("SSSSSSSSSSS", "wd:" + wd.toString());
-//                    weather_data.setText(wd.toString());
+                    setData();
+                    progressDialog.dismiss();
                     break;
             }
         }
     };
+
     private String townID;
     private String ak = "2llxErTgU6XQd2DxTGe35Q7M4hfjqLMG";
     private String SHA1 = "39:EA:65:EC:CA:EC:F8:82:E3:6C:14:F5:C4:B3:50:43:A9:B7:AE:0A";
-
-
+    ProgressDialog progressDialog ;
+    //更新时间
+    private String lastUpdate;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.location);
-
+        initProgressBar();
         getData();
+        initView();
         getCityByCityName(city);
+    }
+
+    private void initProgressBar() {
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setIndeterminate(true);
+        progressDialog.show();
+    }
+
+    private void initView() {
+        tv_title = (TextView) findViewById(R.id.tv_title);
+        publish_time = (TextView) findViewById(R.id.publish_time);
+
     }
 
     private void getData() {
@@ -74,6 +94,11 @@ public class WeatherShowActivity extends AppCompatActivity {
         }
     }
 
+    private void setData() {
+        tv_title.setText(city);
+        lastUpdate = mWeatherData.getWeather().get(0).getLast_update();
+        publish_time.setText(lastUpdate.substring(0,10)+"  最近更新："+lastUpdate.substring(11,19)+"");
+    }
 
     public void getCityByCityName(String city) {
         WeatherCityDao dao = new WeatherCityDao(getApplicationContext());
@@ -83,6 +108,7 @@ public class WeatherShowActivity extends AppCompatActivity {
             townID = cwcc.getTownID();
             Log.i("SSSSSSSSSSS", "townID==" + townID);
             Log.i("SSSSSSSSSSS", "city==" + city);
+            sendRequestWithHttpClient();
         }
     }
 
@@ -109,15 +135,17 @@ public class WeatherShowActivity extends AppCompatActivity {
                         response.append(line);
                     }
                     Log.i("SSSSSSSSSSS", "response:" + response.toString());
-                    WeatherData wd = JSON.parseObject(response.toString(), WeatherData.class);
-                    if (wd != null) {
+                    WeatherData weatherData = JSON.parseObject(response.toString(), WeatherData.class);
+                    if (weatherData != null) {
                         setSp(response.toString());
+                        WeatherShowActivity.this.mWeatherData=weatherData;
                     }
-                    String jsonString = JSON.toJSONString(wd);
+
+                    String jsonString = JSON.toJSONString(weatherData);
                     Log.i("SSSSSSSSSSS", "jsonString:" + jsonString);
                     Message message = new Message();
                     message.what = 1;
-                    message.obj = wd;
+                    message.obj = weatherData;
                     handler.sendMessage(message);
 
 

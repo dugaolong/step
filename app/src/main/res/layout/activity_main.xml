@@ -28,6 +28,7 @@
                 <!--android:visibility="gone" />-->
 
             <TextView
+                android:visibility="gone"
                 android:text="我的"
                 android:textColor="@color/color_white"
                 android:id="@+id/tv_left"

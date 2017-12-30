@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorPrimary">#1EAAF1</color>
+    <color name="colorPrimaryDark">#1EAAF1</color>
     <color name="colorAccent">#FF4081</color>
     <color name="yellow">#fd9c06</color>
     <color name="red">#EE2C2C</color>
@@ -15,4 +15,7 @@
     <color name="color_hotPink">#FF69B4</color>
     <color name="color_white">#ffffff</color>
     <color name="shape_dialog_bg">#dddddd</color>
+
+    <color name="click_bg">#e9e9e9</color>
+    <color name="bg_weather">#1EAAF1</color>
 </resources>
