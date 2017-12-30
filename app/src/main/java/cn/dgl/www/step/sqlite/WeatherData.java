@@ -351,7 +351,49 @@ public class WeatherData  {
                     public void setQuality(String quality) {
                         this.quality = quality;
                     }
+
+                    @Override
+                    public String toString() {
+                        return "CityBean{" +
+                                "aqi='" + aqi + '\'' +
+                                ", pm25='" + pm25 + '\'' +
+                                ", pm10='" + pm10 + '\'' +
+                                ", so2='" + so2 + '\'' +
+                                ", no2='" + no2 + '\'' +
+                                ", co='" + co + '\'' +
+                                ", o3='" + o3 + '\'' +
+                                ", last_update='" + last_update + '\'' +
+                                ", quality='" + quality + '\'' +
+                                '}';
+                    }
                 }
+
+                @Override
+                public String toString() {
+                    return "AirQualityBean{" +
+                            "city=" + city +
+                            ", stations=" + stations +
+                            '}';
+                }
+            }
+
+            @Override
+            public String toString() {
+                return "NowBean{" +
+                        "text='" + text + '\'' +
+                        ", code='" + code + '\'' +
+                        ", temperature='" + temperature + '\'' +
+                        ", feels_like='" + feels_like + '\'' +
+                        ", wind_direction='" + wind_direction + '\'' +
+                        ", wind_speed='" + wind_speed + '\'' +
+                        ", wind_scale='" + wind_scale + '\'' +
+                        ", humidity='" + humidity + '\'' +
+                        ", visibility='" + visibility + '\'' +
+                        ", pressure='" + pressure + '\'' +
+                        ", pressure_rising='" + pressure_rising + '\'' +
+                        ", air_quality=" + air_quality +
+                        ", alarms=" + alarms +
+                        '}';
             }
         }
 
@@ -479,6 +521,14 @@ public class WeatherData  {
                     public void setDetails(String details) {
                         this.details = details;
                     }
+
+                    @Override
+                    public String toString() {
+                        return "DressingBean{" +
+                                "brief='" + brief + '\'' +
+                                ", details='" + details + '\'' +
+                                '}';
+                    }
                 }
 
                 public static class UvBean {
@@ -504,6 +554,14 @@ public class WeatherData  {
 
                     public void setDetails(String details) {
                         this.details = details;
+                    }
+
+                    @Override
+                    public String toString() {
+                        return "UvBean{" +
+                                "brief='" + brief + '\'' +
+                                ", details='" + details + '\'' +
+                                '}';
                     }
                 }
 
@@ -531,6 +589,14 @@ public class WeatherData  {
                     public void setDetails(String details) {
                         this.details = details;
                     }
+
+                    @Override
+                    public String toString() {
+                        return "CarWashingBean{" +
+                                "brief='" + brief + '\'' +
+                                ", details='" + details + '\'' +
+                                '}';
+                    }
                 }
 
                 public static class TravelBean {
@@ -556,6 +622,14 @@ public class WeatherData  {
 
                     public void setDetails(String details) {
                         this.details = details;
+                    }
+
+                    @Override
+                    public String toString() {
+                        return "TravelBean{" +
+                                "brief='" + brief + '\'' +
+                                ", details='" + details + '\'' +
+                                '}';
                     }
                 }
 
@@ -583,6 +657,14 @@ public class WeatherData  {
                     public void setDetails(String details) {
                         this.details = details;
                     }
+
+                    @Override
+                    public String toString() {
+                        return "FluBean{" +
+                                "brief='" + brief + '\'' +
+                                ", details='" + details + '\'' +
+                                '}';
+                    }
                 }
 
                 public static class SportBean {
@@ -609,7 +691,36 @@ public class WeatherData  {
                     public void setDetails(String details) {
                         this.details = details;
                     }
+
+                    @Override
+                    public String toString() {
+                        return "SportBean{" +
+                                "brief='" + brief + '\'' +
+                                ", details='" + details + '\'' +
+                                '}';
+                    }
                 }
+
+                @Override
+                public String toString() {
+                    return "SuggestionBean{" +
+                            "dressing=" + dressing +
+                            ", uv=" + uv +
+                            ", car_washing=" + car_washing +
+                            ", travel=" + travel +
+                            ", flu=" + flu +
+                            ", sport=" + sport +
+                            '}';
+                }
+            }
+
+            @Override
+            public String toString() {
+                return "TodayBean{" +
+                        "sunrise='" + sunrise + '\'' +
+                        ", sunset='" + sunset + '\'' +
+                        ", suggestion=" + suggestion +
+                        '}';
             }
         }
 
@@ -707,6 +818,41 @@ public class WeatherData  {
             public void setWind(String wind) {
                 this.wind = wind;
             }
+
+            @Override
+            public String toString() {
+                return "FutureBean{" +
+                        "date='" + date + '\'' +
+                        ", high='" + high + '\'' +
+                        ", low='" + low + '\'' +
+                        ", day='" + day + '\'' +
+                        ", text='" + text + '\'' +
+                        ", code1='" + code1 + '\'' +
+                        ", code2='" + code2 + '\'' +
+                        ", cop='" + cop + '\'' +
+                        ", wind='" + wind + '\'' +
+                        '}';
+            }
         }
+
+        @Override
+        public String toString() {
+            return "WeatherBean{" +
+                    "city_name='" + city_name + '\'' +
+                    ", city_id='" + city_id + '\'' +
+                    ", last_update='" + last_update + '\'' +
+                    ", now=" + now +
+                    ", today=" + today +
+                    ", future=" + future +
+                    '}';
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "WeatherData{" +
+                "weather=" + weather +
+                ", status='" + status + '\'' +
+                '}';
     }
 }

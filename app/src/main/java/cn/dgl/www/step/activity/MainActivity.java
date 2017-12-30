@@ -11,7 +11,8 @@ import android.view.View;
 import android.widget.TextView;
 
 import cn.dgl.www.step.R;
-import cn.dgl.www.step.lbs.LocationActivity;
+import cn.dgl.www.step.lbs.WeatherShowActivity;
+import cn.dgl.www.step.lbs.LoadLbs;
 import cn.dgl.www.step.step.UpdateUiCallBack;
 import cn.dgl.www.step.step.service.StepService;
 import cn.dgl.www.step.step.utils.SharedPreferencesUtils;
@@ -25,7 +26,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private StepArcView cc;
     private TextView tv_set;
     private TextView tv_isSupport;
-    private TextView tv_right;
+    private TextView tv_right, tv_left;
     private SharedPreferencesUtils sp;
 
     private void assignViews() {
@@ -34,6 +35,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         tv_set = (TextView) findViewById(R.id.tv_set);
         tv_isSupport = (TextView) findViewById(R.id.tv_isSupport);
         tv_right = (TextView) findViewById(R.id.tv_right);
+        tv_left = (TextView) findViewById(R.id.tv_left);
     }
 
     @Override
@@ -50,6 +52,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         tv_set.setOnClickListener(this);
         tv_data.setOnClickListener(this);
         tv_right.setOnClickListener(this);
+        tv_left.setOnClickListener(this);
     }
 
     private void initData() {
@@ -125,7 +128,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(new Intent(this, HistoryActivity.class));
                 break;
             case R.id.tv_right:
-                startActivity(new Intent(this, LocationActivity.class));
+                startActivity(new Intent(this, LoadLbs.class));
+                break;
+            case R.id.tv_left:
+                startActivity(new Intent(this, WeatherShowActivity.class));
                 break;
         }
     }

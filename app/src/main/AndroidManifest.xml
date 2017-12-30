@@ -50,8 +50,9 @@
             android:launchMode="singleTask"></activity>
         <activity android:name=".activity.SetPlanActivity" />
         <activity android:name=".activity.HistoryActivity" />
-        <activity android:name=".lbs.Test2" />
-        <activity android:name=".lbs.LocationActivity" />
+        <activity android:name=".lbs.LoadLbs" />
+        <activity android:name=".lbs.WeatherShowActivity" />
+        <activity android:name=".lbs.SelectCityActivity" />
 
         <service
             android:name=".step.service.StepService"

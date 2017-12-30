@@ -22,11 +22,17 @@ public class WeatherCityDao {
         helper = new MySqliteHelper(context, "CenterWeatherCityCode.db", null, 1);
         SQLiteDatabase db = helper.getWritableDatabase();
         Cursor cursor = db.rawQuery("select * from city_code", null);
+//        Cursor cursor = db.query("city_code",
+//                new String[]{"countryID","countryName","countryEN","areaID","areaName","areaEN","cityID","cityName","cityEN","townID","townName","townEN"},
+//                "cityName = ?", new String[]{"西安"},
+//                null, null, null);
         if (cursor == null) {
+            Log.i("SSSSSSSSSSS","WeatherCityDao is null");
             return null;
         }
         while (cursor.moveToNext()) {
             CenterWeatherCityCode stu = new CenterWeatherCityCode(
+                    cursor.getString(0),
                     cursor.getString(1),
                     cursor.getString(2),
                     cursor.getString(3),
@@ -37,9 +43,8 @@ public class WeatherCityDao {
                     cursor.getString(8),
                     cursor.getString(9),
                     cursor.getString(10),
-                    cursor.getString(11),
-                    cursor.getString(12));
-            Log.i("WeatherCityDao", stu.toString());
+                    cursor.getString(11));
+            Log.i("SSSSSSSSSSS", "WeatherCityDao:"+stu.toString());
             list.add(stu);
         }
         return list;
@@ -52,9 +57,10 @@ public class WeatherCityDao {
 //        Cursor cursor=db.rawQuery("select * from city_code where cityName=?", new String[]{cityName});
         Cursor cursor = db.query("city_code",
         new String[]{"countryID","countryName","countryEN","areaID","areaName","areaEN","cityID","cityName","cityEN","townID","townName","townEN"},
-                "townName=?", new String[]{district},
+                "townName like ?", new String[]{"%"+district+"%"},
                 null, null, null);
         if(cursor == null){
+            Log.i("SSSSSSSSSSS","WeatherCityDao is null");
             return null;
         }
         while (cursor.moveToNext()) {
@@ -71,7 +77,7 @@ public class WeatherCityDao {
                     cursor.getString(9),
                     cursor.getString(10),
                     cursor.getString(11));
-            Log.i("WeatherCityDao", cwcc.toString());
+            Log.i("SSSSSSSSSSS", "cwcc:"+cwcc.toString());
         }
         return cwcc;
     }

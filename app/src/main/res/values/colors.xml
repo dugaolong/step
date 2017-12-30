@@ -14,4 +14,5 @@
     <color name="color_tomato">#FF6347</color>
     <color name="color_hotPink">#FF69B4</color>
     <color name="color_white">#ffffff</color>
+    <color name="shape_dialog_bg">#dddddd</color>
 </resources>
