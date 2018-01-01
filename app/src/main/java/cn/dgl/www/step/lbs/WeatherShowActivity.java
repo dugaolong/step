@@ -33,6 +33,7 @@ import cn.dgl.www.step.sqlite.CenterWeatherCityCode;
 import cn.dgl.www.step.sqlite.WeatherCityDao;
 import cn.dgl.www.step.sqlite.WeatherData;
 
+
 /**
  * Created by dugaolong on 17/12/28.
  */
@@ -41,7 +42,7 @@ public class WeatherShowActivity extends AppCompatActivity {
 
     private WeatherData mWeatherData = null;
     private String city;
-    private TextView tv_title,publish_time;
+    private TextView tv_title, publish_time;
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -64,9 +65,11 @@ public class WeatherShowActivity extends AppCompatActivity {
     private String townID;
     private String ak = "2llxErTgU6XQd2DxTGe35Q7M4hfjqLMG";
     private String SHA1 = "39:EA:65:EC:CA:EC:F8:82:E3:6C:14:F5:C4:B3:50:43:A9:B7:AE:0A";
-    ProgressDialog progressDialog ;
+    ProgressDialog progressDialog;
     //更新时间
     private String lastUpdate;
+    private TextView tianqi, wendu, feng, shidu, feels_like, pm25, qiya, nengjiandu, richu,riluo, kongqizl;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,6 +80,13 @@ public class WeatherShowActivity extends AppCompatActivity {
         getCityByCityName(city);
     }
 
+    private void getData() {
+        Bundle bundle = getIntent().getExtras();
+        if (bundle.containsKey("city")) {
+            city = bundle.getString("city");
+        }
+    }
+
     private void initProgressBar() {
         progressDialog = new ProgressDialog(this);
         progressDialog.setIndeterminate(true);
@@ -84,35 +94,47 @@ public class WeatherShowActivity extends AppCompatActivity {
     }
 
     private void initView() {
+        tianqi = (TextView) findViewById(R.id.tianqi);
         tv_title = (TextView) findViewById(R.id.tv_title);
         publish_time = (TextView) findViewById(R.id.publish_time);
-
-    }
-
-    private void getData() {
-        Bundle bundle = getIntent().getExtras();
-        if(bundle.containsKey("city"))
-        {
-            city = bundle.getString("city");
-        }
+        wendu = (TextView) findViewById(R.id.wendu);
+        feng = (TextView) findViewById(R.id.feng);
+        shidu = (TextView) findViewById(R.id.shidu);
+        feels_like = (TextView) findViewById(R.id.feels_like);
+        pm25 = (TextView) findViewById(R.id.pm25);
+        qiya = (TextView) findViewById(R.id.qiya);
+        nengjiandu = (TextView) findViewById(R.id.nengjiandu);
+        richu = (TextView) findViewById(R.id.richu);
+        riluo = (TextView) findViewById(R.id.riluo);
+        kongqizl = (TextView) findViewById(R.id.kongqizl);
     }
 
     private void setData() {
         tv_title.setText(city);
-        lastUpdate = mWeatherData.getWeather().get(0).getLast_update();
-        publish_time.setText(lastUpdate.substring(0,10)+"  最近更新："+lastUpdate.substring(11,19)+"");
+        WeatherData.WeatherBean weatherBean = mWeatherData.getWeather().get(0);
+        lastUpdate = weatherBean.getLast_update();
+        publish_time.setText(lastUpdate.substring(0, 10) + "  最近更新：" + lastUpdate.substring(11, 19) + "");
+        WeatherData.WeatherBean.NowBean nowBean = weatherBean.getNow();
+        tianqi.setText(nowBean.getText());
+        wendu.setText(nowBean.getTemperature()+"°");
+        feng.setText(nowBean.getWind_direction()+"风\n"+nowBean.getWind_speed());
+        shidu.setText(nowBean.getHumidity()+"%\n空气湿度");
+        feels_like.setText("体感温度："+weatherBean.getNow().getFeels_like()+"°");
+        pm25.setText(nowBean.getAir_quality().getCity().getPm25()+"\npm2.5指数");
+        qiya.setText(nowBean.getPressure()+"百帕\n气压");
+        nengjiandu.setText(nowBean.getVisibility()+"KM\n能见度");
+        richu.setText(weatherBean.getToday().getSunrise()+"\n日出");
+        riluo.setText(weatherBean.getToday().getSunset()+"\n日落");
+        kongqizl.setText(nowBean.getAir_quality().getCity().getQuality()+"\n空气质量");
     }
 
     public void getCityByCityName(String city) {
         WeatherCityDao dao = new WeatherCityDao(getApplicationContext());
-        if(city.endsWith("市"))
-        {
+        if (city.endsWith("市")) {
             city = city.substring(0, city.length() - 1);
-        }else if(city.endsWith("地区"))
-        {
+        } else if (city.endsWith("地区")) {
             city = city.substring(0, city.length() - 2);
-        }else if(city.endsWith("自治州"))
-        {
+        } else if (city.endsWith("自治州")) {
             city = city.substring(0, city.length() - 3);
         }
         CenterWeatherCityCode cwcc = dao.getCityByCityName(city);
@@ -121,8 +143,7 @@ public class WeatherShowActivity extends AppCompatActivity {
             Log.i("SSSSSSSSSSS", "townID==" + townID);
             Log.i("SSSSSSSSSSS", "city==" + city);
             sendRequestWithHttpClient();
-        }else
-        {
+        } else {
             //地区不存在，提示重新选择
             showokDialog();
         }
@@ -144,6 +165,7 @@ public class WeatherShowActivity extends AppCompatActivity {
         AlertDialog dialog = builder.create();
         dialog.show();
     }
+
     private void gotoSelectCity() {
         startActivity(new Intent(WeatherShowActivity.this, SelectCityActivity.class));
         finish();
@@ -175,7 +197,7 @@ public class WeatherShowActivity extends AppCompatActivity {
                     WeatherData weatherData = JSON.parseObject(response.toString(), WeatherData.class);
                     if (weatherData != null) {
                         setSp(response.toString());
-                        WeatherShowActivity.this.mWeatherData=weatherData;
+                        WeatherShowActivity.this.mWeatherData = weatherData;
                     }
 
                     String jsonString = JSON.toJSONString(weatherData);

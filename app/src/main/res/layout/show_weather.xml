@@ -114,48 +114,61 @@
             android:text="8°"
             android:textColor="@color/color_white"
             android:layout_marginBottom="20dp"/>
-        <!-- 温度范围-->
+        <!-- 体感温度-->
         <TextView
-            android:id="@+id/wendu_range"
+            android:id="@+id/feels_like"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/wendu"
             android:layout_marginTop="6dp"
             android:gravity="center"
-            android:textSize="20sp"
+            android:textSize="16sp"
             android:text="8°/20°"
             android:textColor="@color/color_white"/>
 
         <LinearLayout
             android:id="@+id/datails"
-            android:layout_below="@id/wendu_range"
+            android:layout_below="@id/feels_like"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:padding="6dp">
 
             <TextView
+                android:id="@+id/feng"
                 android:textColor="@color/color_white"
                 android:text="西北风\n2.0米/秒\n风况"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content" />
             <TextView
+                android:id="@+id/shidu"
                 android:text="23%\n湿度"
                 android:layout_width="0dp"
                 android:textColor="@color/color_white"
                 android:layout_weight="1"
                 android:layout_height="wrap_content" />
+
+            <!--<TextView-->
+                <!--android:id="@+id/tigan"-->
+                <!--android:textColor="@color/color_white"-->
+                <!--android:text="8度\n体感温度"-->
+                <!--android:layout_width="0dp"-->
+                <!--android:layout_weight="1"-->
+                <!--android:layout_height="wrap_content" />-->
             <TextView
-                android:textColor="@color/color_white"
-                android:text="8度\n体感温度"
+                android:id="@+id/pm25"
+                android:text="232\nPM2.5"
                 android:layout_width="0dp"
+                android:textColor="@color/color_white"
                 android:layout_weight="1"
                 android:layout_height="wrap_content" />
+
             <TextView
-                android:text="低\n紫外线强度"
-                android:layout_width="0dp"
+                android:id="@+id/qiya"
                 android:textColor="@color/color_white"
+                android:text="1033百帕\n气压"
+                android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content" />
         </LinearLayout>
@@ -167,30 +180,36 @@
             android:orientation="horizontal"
             android:padding="6dp">
 
+
             <TextView
-                android:textColor="@color/color_white"
-                android:text="1033百帕\n气压"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content" />
-            <TextView
+                android:id="@+id/nengjiandu"
                 android:text="5公里\n可见度"
                 android:layout_width="0dp"
                 android:textColor="@color/color_white"
                 android:layout_weight="1"
                 android:layout_height="wrap_content" />
             <TextView
-                android:textColor="@color/color_white"
-                android:text="-10度\n露点"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content" />
-            <TextView
+                android:id="@+id/kongqizl"
                 android:text="500\n空气质量指数"
                 android:layout_width="0dp"
                 android:textColor="@color/color_white"
                 android:layout_weight="1"
                 android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/richu"
+                android:textColor="@color/color_white"
+                android:text="日出:08:22\n日落16:09"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/riluo"
+                android:textColor="@color/color_white"
+                android:text="日出:08:22\n日落16:09"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content" />
+
         </LinearLayout>
     </RelativeLayout>
 </RelativeLayout>
