@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/layout_titlebar"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@color/colorPrimary"
+        android:fitsSystemWindows="true"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_left"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:text="杭州"
+            android:textColor="@color/color_white"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:background="#00000000"
+            android:gravity="center_horizontal"
+            android:paddingLeft="10px"
+            android:paddingRight="10px"
+            android:text="北京"
+            android:textColor="#ffffff"
+            android:textSize="20sp" />
+
+        <ImageView
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@id/tv_title"
+            android:src="@drawable/location_title" />
+
+        <TextView
+            android:id="@+id/tv_right"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:text="天气"
+            android:textColor="@color/color_white"
+            android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/iv_right"
+            android:layout_width="20dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_gravity="center"
+            android:layout_marginRight="18dp"
+            android:gravity="center"
+            android:src="@drawable/set_city" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/layout_titlebar"
+        android:layout_marginTop="2dp"
+        android:background="@color/bg_weather">
+
+        <!-- 发布时间-->
+        <TextView
+            android:id="@+id/publish_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="6dp"
+            android:gravity="center"
+            android:text="20:00发布"
+            android:textColor="@color/color_publish" />
+
+        <!-- 天气-->
+        <TextView
+            android:id="@+id/tianqi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/publish_time"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="6dp"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:text="晴天"
+            android:textColor="@color/color_white" />
+
+        <!-- 温度-->
+        <TextView
+            android:id="@+id/wendu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tianqi"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:textSize="100sp"
+            android:text="8°"
+            android:textColor="@color/color_white"
+            android:layout_marginBottom="20dp"/>
+        <!-- 温度范围-->
+        <TextView
+            android:id="@+id/wendu_range"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/wendu"
+            android:layout_marginTop="6dp"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:text="8°/20°"
+            android:textColor="@color/color_white"/>
+
+        <LinearLayout
+            android:id="@+id/datails"
+            android:layout_below="@id/wendu_range"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="6dp">
+
+            <TextView
+                android:textColor="@color/color_white"
+                android:text="西北风\n2.0米/秒\n风况"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:text="23%\n湿度"
+                android:layout_width="0dp"
+                android:textColor="@color/color_white"
+                android:layout_weight="1"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:textColor="@color/color_white"
+                android:text="8度\n体感温度"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:text="低\n紫外线强度"
+                android:layout_width="0dp"
+                android:textColor="@color/color_white"
+                android:layout_weight="1"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/datails_two"
+            android:layout_below="@id/datails"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="6dp">
+
+            <TextView
+                android:textColor="@color/color_white"
+                android:text="1033百帕\n气压"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:text="5公里\n可见度"
+                android:layout_width="0dp"
+                android:textColor="@color/color_white"
+                android:layout_weight="1"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:textColor="@color/color_white"
+                android:text="-10度\n露点"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:text="500\n空气质量指数"
+                android:layout_width="0dp"
+                android:textColor="@color/color_white"
+                android:layout_weight="1"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </RelativeLayout>
+</RelativeLayout>

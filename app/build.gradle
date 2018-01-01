@@ -55,4 +55,5 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.orhanobut:logger:1.8'
     compile 'com.alibaba:fastjson:1.2.44'
+    compile 'com.belerweb:pinyin4j:2.5.0'
 }

@@ -1,7 +1,10 @@
 package cn.dgl.www.step.lbs;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
@@ -67,7 +70,7 @@ public class WeatherShowActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.location);
+        setContentView(R.layout.show_weather);
         initProgressBar();
         getData();
         initView();
@@ -102,14 +105,48 @@ public class WeatherShowActivity extends AppCompatActivity {
 
     public void getCityByCityName(String city) {
         WeatherCityDao dao = new WeatherCityDao(getApplicationContext());
-        city = city.substring(0, city.length() - 1);
+        if(city.endsWith("市"))
+        {
+            city = city.substring(0, city.length() - 1);
+        }else if(city.endsWith("地区"))
+        {
+            city = city.substring(0, city.length() - 2);
+        }else if(city.endsWith("自治州"))
+        {
+            city = city.substring(0, city.length() - 3);
+        }
         CenterWeatherCityCode cwcc = dao.getCityByCityName(city);
         if (cwcc != null) {
             townID = cwcc.getTownID();
             Log.i("SSSSSSSSSSS", "townID==" + townID);
             Log.i("SSSSSSSSSSS", "city==" + city);
             sendRequestWithHttpClient();
+        }else
+        {
+            //地区不存在，提示重新选择
+            showokDialog();
         }
+    }
+
+    //提示重新选择
+    private void showokDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(WeatherShowActivity.this);
+        builder.setTitle("我的天");
+        builder.setMessage("当前地区不存在");
+        builder.setPositiveButton("重新选择", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                gotoSelectCity();
+                finish();
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+    private void gotoSelectCity() {
+        startActivity(new Intent(WeatherShowActivity.this, SelectCityActivity.class));
+        finish();
     }
 
     private void sendRequestWithHttpClient() {

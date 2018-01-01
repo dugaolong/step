@@ -1,326 +1,401 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#F6EDF9"
     android:orientation="vertical">
 
     <LinearLayout
-        android:id="@+id/pop_layout"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
-        android:orientation="horizontal"
-        android:padding="10dp">
-
-        <cn.dgl.www.step.view.ClearEditText
-            android:id="@+id/et_search"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@drawable/qav_audio_btn_white_normal"
-            android:hint="搜索问题"
-            android:maxLength="250"
-            android:maxLines="3"
-            android:minHeight="38dip"
-            android:padding="5dp"
-            android:textSize="16sp" />
-
-
-        <TextView
-            android:id="@+id/tv_cancel"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:layout_weight="4.2"
-            android:gravity="center"
-            android:padding="8dp"
-            android:singleLine="true"
-            android:text="取消"
-            android:textColor="@android:color/darker_gray"
-            android:textSize="17sp"
-            android:visibility="gone" />
-    </LinearLayout>
-
-    <TextView
-        android:layout_below="@id/pop_layout"
-        android:id="@+id/tv_hotcity"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="热门城市"
-        android:textColor="#444444" />
-
-    <LinearLayout
-        android:layout_below="@id/tv_hotcity"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="90dp"
-            android:orientation="horizontal">
+            android:layout_height="match_parent"
+            android:background="#F6EDF9"
+            android:orientation="vertical">
 
             <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
+                android:id="@+id/pop_layout"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:orientation="horizontal"
+                android:padding="10dp">
+
+                <cn.dgl.www.step.view.ClearEditText
+                    android:id="@+id/et_search"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@drawable/qav_audio_btn_white_normal"
+                    android:hint="请填写城市名称"
+                    android:maxLength="250"
+                    android:maxLines="3"
+                    android:minHeight="38dip"
+                    android:padding="5dp"
+                    android:textSize="16sp" />
+
+
+                <TextView
+                    android:id="@+id/tv_cancel"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_weight="4.2"
+                    android:gravity="center"
+                    android:padding="8dp"
+                    android:singleLine="true"
+                    android:text="取消"
+                    android:textColor="@android:color/darker_gray"
+                    android:textSize="17sp"
+                    android:visibility="gone" />
+            </LinearLayout>
+
+
+
+            <LinearLayout
+                android:id="@+id/ll_hotCity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/pop_layout"
                 android:orientation="vertical">
 
                 <TextView
-                    android:layout_gravity="center"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/tv_hotcity"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="#FEFAFE"
-                    android:gravity="center"
-                    android:padding="18dp"
-                    android:text="北京"
-                    android:textColor="#A59FA6"
-                    android:textSize="18sp" />
+                    android:layout_margin="8dp"
+                    android:paddingLeft="10dp"
+                    android:text="热门城市"
+                    android:textColor="#444444" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="90dp"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/beijing"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:background="#FEFAFE"
+                            android:gravity="center"
+                            android:padding="18dp"
+                            android:text="北京"
+                            android:textColor="#777777"
+                            android:textSize="18sp" />
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/shanghai"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:background="#FEFAFE"
+                            android:gravity="center"
+                            android:padding="18dp"
+                            android:text="上海"
+                            android:textColor="#777777"
+                            android:textSize="18sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:background="#FEFAFE"
+                            android:gravity="center"
+                            android:padding="18dp"
+                            android:text="深圳"
+                            android:id="@+id/shenzhen"
+                            android:textColor="#777777"
+                            android:textSize="18sp" />
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="90dp"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:background="#FEFAFE"
+                            android:gravity="center"
+                            android:padding="18dp"
+                            android:id="@+id/guangzhou"
+                            android:text="广州"
+                            android:textColor="#777777"
+                            android:textSize="18sp" />
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:background="#FEFAFE"
+                            android:gravity="center"
+                            android:padding="18dp"
+                            android:id="@+id/hangzhou"
+                            android:text="杭州"
+                            android:textColor="#777777"
+                            android:textSize="18sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:background="#FEFAFE"
+                            android:gravity="center"
+                            android:padding="18dp"
+                            android:text="成都"
+                            android:id="@+id/chengdu"
+                            android:textColor="#777777"
+                            android:textSize="18sp" />
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="90dp"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:background="#FEFAFE"
+                            android:id="@+id/chongqing"
+                            android:gravity="center"
+                            android:padding="18dp"
+                            android:text="重庆"
+                            android:textColor="#777777"
+                            android:textSize="18sp" />
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:background="#FEFAFE"
+                            android:gravity="center"
+                            android:padding="18dp"
+                            android:text="西安"
+                            android:id="@+id/xian"
+                            android:textColor="#777777"
+                            android:textSize="18sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:background="#FEFAFE"
+                            android:gravity="center"
+                            android:padding="18dp"
+                            android:text="南京"
+                            android:id="@+id/nanjing"
+                            android:textColor="#777777"
+                            android:textSize="18sp" />
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="90dp"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:background="#FEFAFE"
+                            android:gravity="center"
+                            android:padding="18dp"
+                            android:text="郑州"
+                            android:id="@+id/zhengzhou"
+                            android:textColor="#777777"
+                            android:textSize="18sp" />
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:background="#FEFAFE"
+                            android:gravity="center"
+                            android:padding="18dp"
+                            android:id="@+id/tianjin"
+                            android:text="天津"
+                            android:textColor="#777777"
+                            android:textSize="18sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:background="#FEFAFE"
+                            android:gravity="center"
+                            android:id="@+id/wuhan"
+                            android:padding="18dp"
+                            android:text="武汉"
+                            android:textColor="#777777"
+                            android:textSize="18sp" />
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
             </LinearLayout>
+        </RelativeLayout>
 
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_gravity="center"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="#FEFAFE"
-                    android:gravity="center"
-                    android:padding="18dp"
-                    android:text="北京"
-                    android:textColor="#A59FA6"
-                    android:textSize="18sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_gravity="center"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="#FEFAFE"
-                    android:gravity="center"
-                    android:padding="18dp"
-                    android:text="北京"
-                    android:textColor="#A59FA6"
-                    android:textSize="18sp" />
-            </LinearLayout>
-
-
-        </LinearLayout>
-
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="90dp"
-            android:orientation="horizontal">
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:orientation="vertical">
 
-            <LinearLayout
-                android:layout_width="0dp"
+            <cn.dgl.www.step.view.NoScrollExpandListView
+                android:id="@+id/expandableListView"
+                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:visibility="visible"
+                android:childDivider="@drawable/list_divider">
+
+            </cn.dgl.www.step.view.NoScrollExpandListView>
+
+            <cn.dgl.www.step.view.NoScrollListView
+                android:id="@+id/lv_search"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone">
+
+            </cn.dgl.www.step.view.NoScrollListView>
+
+            <TextView
+                android:id="@+id/dialog"
+                android:layout_width="80dip"
+                android:layout_height="80dip"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center"
+                android:background="@drawable/show_head_toast_bg"
                 android:gravity="center"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_gravity="center"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="#FEFAFE"
-                    android:gravity="center"
-                    android:padding="18dp"
-                    android:text="北京"
-                    android:textColor="#A59FA6"
-                    android:textSize="18sp" />
-            </LinearLayout>
+                android:textColor="#ffffffff"
+                android:textSize="30.0dip"
+                android:visibility="gone" />
 
 
-            <LinearLayout
-                android:layout_width="0dp"
+            <cn.dgl.www.step.contact.SideBar
+                android:id="@+id/sidebar"
+                android:layout_width="20dip"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="horizontal">
+                android:layout_alignParentRight="true"
+                android:visibility="gone" />
 
-                <TextView
-                    android:layout_gravity="center"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="#FEFAFE"
-                    android:gravity="center"
-                    android:padding="18dp"
-                    android:text="北京"
-                    android:textColor="#A59FA6"
-                    android:textSize="18sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_gravity="center"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="#FEFAFE"
-                    android:gravity="center"
-                    android:padding="18dp"
-                    android:text="北京"
-                    android:textColor="#A59FA6"
-                    android:textSize="18sp" />
-            </LinearLayout>
-
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="90dp"
-            android:orientation="horizontal">
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_gravity="center"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="#FEFAFE"
-                    android:gravity="center"
-                    android:padding="18dp"
-                    android:text="北京"
-                    android:textColor="#A59FA6"
-                    android:textSize="18sp" />
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_gravity="center"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="#FEFAFE"
-                    android:gravity="center"
-                    android:padding="18dp"
-                    android:text="北京"
-                    android:textColor="#A59FA6"
-                    android:textSize="18sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_gravity="center"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="#FEFAFE"
-                    android:gravity="center"
-                    android:padding="18dp"
-                    android:text="北京"
-                    android:textColor="#A59FA6"
-                    android:textSize="18sp" />
-            </LinearLayout>
-
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="90dp"
-            android:orientation="horizontal">
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_gravity="center"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="#FEFAFE"
-                    android:gravity="center"
-                    android:padding="18dp"
-                    android:text="北京"
-                    android:textColor="#A59FA6"
-                    android:textSize="18sp" />
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_gravity="center"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="#FEFAFE"
-                    android:gravity="center"
-                    android:padding="18dp"
-                    android:text="北京"
-                    android:textColor="#A59FA6"
-                    android:textSize="18sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_gravity="center"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="#FEFAFE"
-                    android:gravity="center"
-                    android:padding="18dp"
-                    android:text="北京"
-                    android:textColor="#A59FA6"
-                    android:textSize="18sp" />
-            </LinearLayout>
-
-
-        </LinearLayout>
+        </RelativeLayout>
 
     </LinearLayout>
-</RelativeLayout>
+</ScrollView>
