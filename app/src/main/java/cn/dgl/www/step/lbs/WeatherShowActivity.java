@@ -12,6 +12,8 @@ import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
@@ -38,7 +40,7 @@ import cn.dgl.www.step.sqlite.WeatherData;
  * Created by dugaolong on 17/12/28.
  */
 
-public class WeatherShowActivity extends AppCompatActivity {
+public class WeatherShowActivity extends AppCompatActivity implements View.OnClickListener{
 
     private WeatherData mWeatherData = null;
     private String city;
@@ -68,6 +70,7 @@ public class WeatherShowActivity extends AppCompatActivity {
     ProgressDialog progressDialog;
     //更新时间
     private String lastUpdate;
+    private ImageView iv_right;
     private TextView tianqi, wendu, feng, shidu, feels_like, pm25, qiya, nengjiandu, richu,riluo, kongqizl;
 
     @Override
@@ -94,6 +97,8 @@ public class WeatherShowActivity extends AppCompatActivity {
     }
 
     private void initView() {
+        iv_right = (ImageView) findViewById(R.id.iv_right);
+        iv_right.setOnClickListener(this);
         tianqi = (TextView) findViewById(R.id.tianqi);
         tv_title = (TextView) findViewById(R.id.tv_title);
         publish_time = (TextView) findViewById(R.id.publish_time);
@@ -277,5 +282,16 @@ public class WeatherShowActivity extends AppCompatActivity {
         }
 
         return sb.toString();
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch(v.getId())
+        {
+            case R.id.iv_right:
+                gotoSelectCity();
+                break;
+        }
+
     }
 }

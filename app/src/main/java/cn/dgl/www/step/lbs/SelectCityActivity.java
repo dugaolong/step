@@ -248,6 +248,12 @@ public class SelectCityActivity extends AppCompatActivity implements View.OnClic
             case R.id.wuhan:
                 gotoShowWeather("武汉");
                 break;
+            case R.id.zhengzhou:
+                gotoShowWeather("郑州");
+                break;
+            case R.id.tianjin:
+                gotoShowWeather("天津");
+                break;
             default:
                 break;
         }

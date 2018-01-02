@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/bg_weather"
     android:orientation="vertical">
 
     <RelativeLayout
         android:id="@+id/layout_titlebar"
         android:layout_width="match_parent"
         android:layout_height="48dp"
+        android:layout_marginBottom="1dp"
         android:background="@color/colorPrimary"
         android:fitsSystemWindows="true"
         android:orientation="horizontal">
@@ -71,145 +73,167 @@
 
     </RelativeLayout>
 
-    <RelativeLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/layout_titlebar"
-        android:layout_marginTop="2dp"
-        android:background="@color/bg_weather">
+        android:orientation="vertical"
 
-        <!-- 发布时间-->
-        <TextView
-            android:id="@+id/publish_time"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="6dp"
-            android:gravity="center"
-            android:text="20:00发布"
-            android:textColor="@color/color_publish" />
+        android:scrollbars="none">
 
-        <!-- 天气-->
-        <TextView
-            android:id="@+id/tianqi"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/publish_time"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="6dp"
-            android:gravity="center"
-            android:textSize="20sp"
-            android:text="晴天"
-            android:textColor="@color/color_white" />
+            android:layout_height="match_parent"
+            >
 
-        <!-- 温度-->
-        <TextView
-            android:id="@+id/wendu"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/tianqi"
-            android:layout_marginTop="20dp"
-            android:gravity="center"
-            android:textSize="100sp"
-            android:text="8°"
-            android:textColor="@color/color_white"
-            android:layout_marginBottom="20dp"/>
-        <!-- 体感温度-->
-        <TextView
-            android:id="@+id/feels_like"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/wendu"
-            android:layout_marginTop="6dp"
-            android:gravity="center"
-            android:textSize="16sp"
-            android:text="8°/20°"
-            android:textColor="@color/color_white"/>
-
-        <LinearLayout
-            android:id="@+id/datails"
-            android:layout_below="@id/feels_like"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="6dp">
-
+            <!-- 发布时间-->
             <TextView
-                android:id="@+id/feng"
-                android:textColor="@color/color_white"
-                android:text="西北风\n2.0米/秒\n风况"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content" />
-            <TextView
-                android:id="@+id/shidu"
-                android:text="23%\n湿度"
-                android:layout_width="0dp"
-                android:textColor="@color/color_white"
-                android:layout_weight="1"
-                android:layout_height="wrap_content" />
+                android:id="@+id/publish_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="6dp"
+                android:gravity="center"
+                android:text="20:00发布"
+                android:textColor="@color/color_publish" />
 
-            <!--<TextView-->
+            <!-- 天气-->
+            <TextView
+                android:id="@+id/tianqi"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/publish_time"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="6dp"
+                android:gravity="center"
+                android:text="晴天"
+                android:textColor="@color/color_white"
+                android:textSize="20sp" />
+
+            <!-- 温度-->
+            <TextView
+                android:id="@+id/wendu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tianqi"
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:text="8°"
+                android:textColor="@color/color_white"
+                android:textSize="100sp" />
+            <!-- 体感温度-->
+            <TextView
+                android:id="@+id/feels_like"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/wendu"
+                android:layout_marginTop="6dp"
+                android:gravity="center"
+                android:text="8°/20°"
+                android:textColor="@color/color_white"
+                android:textSize="16sp" />
+            <!-- 8个指标-->
+            <LinearLayout
+                android:id="@+id/datails"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/feels_like"
+                android:orientation="horizontal"
+                android:padding="6dp">
+
+                <TextView
+                    android:id="@+id/feng"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="西北风\n2.0米/秒\n风况"
+                    android:textColor="@color/color_white" />
+
+                <TextView
+                    android:id="@+id/shidu"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="23%\n湿度"
+                    android:textColor="@color/color_white" />
+
+                <!--<TextView-->
                 <!--android:id="@+id/tigan"-->
                 <!--android:textColor="@color/color_white"-->
                 <!--android:text="8度\n体感温度"-->
                 <!--android:layout_width="0dp"-->
                 <!--android:layout_weight="1"-->
                 <!--android:layout_height="wrap_content" />-->
-            <TextView
-                android:id="@+id/pm25"
-                android:text="232\nPM2.5"
-                android:layout_width="0dp"
-                android:textColor="@color/color_white"
-                android:layout_weight="1"
-                android:layout_height="wrap_content" />
+                <TextView
+                    android:id="@+id/pm25"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="232\nPM2.5"
+                    android:textColor="@color/color_white" />
 
-            <TextView
-                android:id="@+id/qiya"
-                android:textColor="@color/color_white"
-                android:text="1033百帕\n气压"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-        <LinearLayout
-            android:id="@+id/datails_two"
-            android:layout_below="@id/datails"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="6dp">
+                <TextView
+                    android:id="@+id/qiya"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="1033百帕\n气压"
+                    android:textColor="@color/color_white" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/datails_two"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/datails"
+                android:orientation="horizontal"
+                android:padding="6dp">
 
 
-            <TextView
-                android:id="@+id/nengjiandu"
-                android:text="5公里\n可见度"
-                android:layout_width="0dp"
-                android:textColor="@color/color_white"
-                android:layout_weight="1"
-                android:layout_height="wrap_content" />
-            <TextView
-                android:id="@+id/kongqizl"
-                android:text="500\n空气质量指数"
-                android:layout_width="0dp"
-                android:textColor="@color/color_white"
-                android:layout_weight="1"
-                android:layout_height="wrap_content" />
-            <TextView
-                android:id="@+id/richu"
-                android:textColor="@color/color_white"
-                android:text="日出:08:22\n日落16:09"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content" />
-            <TextView
-                android:id="@+id/riluo"
-                android:textColor="@color/color_white"
-                android:text="日出:08:22\n日落16:09"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content" />
+                <TextView
+                    android:id="@+id/nengjiandu"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="5公里\n可见度"
+                    android:textColor="@color/color_white" />
 
-        </LinearLayout>
-    </RelativeLayout>
-</RelativeLayout>
+                <TextView
+                    android:id="@+id/kongqizl"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="500\n空气质量指数"
+                    android:textColor="@color/color_white" />
+
+                <TextView
+                    android:id="@+id/richu"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="日出:08:22\n日落16:09"
+                    android:textColor="@color/color_white" />
+
+                <TextView
+                    android:id="@+id/riluo"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="日出:08:22\n日落16:09"
+                    android:textColor="@color/color_white" />
+
+            </LinearLayout>
+            <!-- 生活指数-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/datails_two"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="20dp">
+
+                <include layout="@layout/shenghuozhishu" />
+            </RelativeLayout>
+        </RelativeLayout>
+
+    </ScrollView>
+</LinearLayout>
