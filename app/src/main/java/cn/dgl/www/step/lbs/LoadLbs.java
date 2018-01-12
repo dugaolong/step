@@ -45,17 +45,16 @@ public class LoadLbs extends Activity {
         mLocationClient.registerLocationListener(myListener);
         //注册监听函数
 
-        LocationClientOption option = new LocationClientOption();
-
-        option.setIsNeedAddress(true);
+        LocationClientOption locationClientOption = new LocationClientOption();
+        locationClientOption.setTimeOut(3000);
+        locationClientOption.setIsNeedAddress(true);
         //可选，是否需要地址信息，默认为不需要，即参数为false
         //如果开发者需要获得当前点的地址信息，此处必须为true
 
-        mLocationClient.setLocOption(option);
+        mLocationClient.setLocOption(locationClientOption);
         //mLocationClient为第二步初始化过的LocationClient对象
         //需将配置好的LocationClientOption对象，通过setLocOption方法传递给LocationClient对象使用
         //更多LocationClientOption的配置，请参照类参考中LocationClientOption类的详细说明
-
         mLocationClient.start();
         //mLocationClient为第二步初始化过的LocationClient对象
         //调用LocationClient的start()方法，便可发起定位请求
@@ -93,6 +92,7 @@ public class LoadLbs extends Activity {
     private void showokDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(LoadLbs.this);
         builder.setTitle("定位成功");
+        builder.setCancelable(false);
         builder.setMessage("当前城市：\n\n"+province+"  "+city+"  "+district);
         builder.setPositiveButton("定位准确", new DialogInterface.OnClickListener() {
             @Override
@@ -115,6 +115,7 @@ public class LoadLbs extends Activity {
     private void showDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(LoadLbs.this);
         builder.setMessage("自动定位失败了，请手动选择城市哦");
+        builder.setCancelable(false);
         builder.setPositiveButton("好的", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {

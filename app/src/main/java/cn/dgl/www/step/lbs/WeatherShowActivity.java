@@ -12,8 +12,10 @@ import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
@@ -29,11 +31,13 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.List;
 
 import cn.dgl.www.step.R;
 import cn.dgl.www.step.sqlite.CenterWeatherCityCode;
 import cn.dgl.www.step.sqlite.WeatherCityDao;
 import cn.dgl.www.step.sqlite.WeatherData;
+import cn.dgl.www.step.view.WeatherChartView;
 
 
 /**
@@ -72,6 +76,9 @@ public class WeatherShowActivity extends AppCompatActivity implements View.OnCli
     private String lastUpdate;
     private ImageView iv_right;
     private TextView tianqi, wendu, feng, shidu, feels_like, pm25, qiya, nengjiandu, richu,riluo, kongqizl;
+    private TextView desc1, desc2, desc3, desc4, desc5, desc6;
+    WeatherChartView chartView ;
+    LinearLayout six_future_ll,six_future_ll_night;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,6 +100,7 @@ public class WeatherShowActivity extends AppCompatActivity implements View.OnCli
     private void initProgressBar() {
         progressDialog = new ProgressDialog(this);
         progressDialog.setIndeterminate(true);
+        progressDialog.setMessage("加载中...");
         progressDialog.show();
     }
 
@@ -112,6 +120,15 @@ public class WeatherShowActivity extends AppCompatActivity implements View.OnCli
         richu = (TextView) findViewById(R.id.richu);
         riluo = (TextView) findViewById(R.id.riluo);
         kongqizl = (TextView) findViewById(R.id.kongqizl);
+        chartView= (WeatherChartView) findViewById(R.id.line_char);
+        six_future_ll = (LinearLayout) findViewById(R.id.six_future_ll);
+        six_future_ll_night = (LinearLayout) findViewById(R.id.six_future_ll_night);
+        desc1 = (TextView) findViewById(R.id.desc1);
+        desc2 = (TextView) findViewById(R.id.desc2);
+        desc3 = (TextView) findViewById(R.id.desc3);
+        desc4 = (TextView) findViewById(R.id.desc4);
+        desc5 = (TextView) findViewById(R.id.desc5);
+        desc6 = (TextView) findViewById(R.id.desc6);
     }
 
     private void setData() {
@@ -131,6 +148,90 @@ public class WeatherShowActivity extends AppCompatActivity implements View.OnCli
         richu.setText(weatherBean.getToday().getSunrise()+"\n日出");
         riluo.setText(weatherBean.getToday().getSunset()+"\n日落");
         kongqizl.setText(nowBean.getAir_quality().getCity().getQuality()+"\n空气质量");
+        List<WeatherData.WeatherBean.FutureBean> futureBeanList= weatherBean.getFuture();
+        //白天的天气
+        for(int i = 0;i<6;i++)
+        {
+            //动态加载view
+            LinearLayout linearLayout = new LinearLayout(this);
+            LinearLayout.LayoutParams llParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT,1);
+            linearLayout.setLayoutParams(llParams);
+            linearLayout.setOrientation(LinearLayout.VERTICAL);
+            six_future_ll.addView(linearLayout);
+            //添加TextView
+            //设置宽高以及权重
+            LinearLayout.LayoutParams tvParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            TextView textView1 = new TextView(this);
+            //设置textview垂直居中
+            textView1.setGravity(Gravity.CENTER);
+            textView1.setLayoutParams(tvParams);
+            textView1.setText(i==0?"今天":(i==1?"明天":futureBeanList.get(i).getDay()));
+            linearLayout.addView(textView1);
+            TextView textView2 = new TextView(this);
+            //设置textview垂直居中
+            textView2.setGravity(Gravity.CENTER);
+            textView2.setLayoutParams(tvParams);
+            String date = futureBeanList.get(i).getDate();
+            textView2.setText(date.substring(date.length()-2,date.length())+"日");
+            linearLayout.addView(textView2);
+            TextView textView3 = new TextView(this);
+            //设置textview垂直居中
+            textView3.setGravity(Gravity.CENTER);
+            textView3.setLayoutParams(tvParams);
+            String text = futureBeanList.get(i).getText();
+            String wea1 = text.substring(0,text.indexOf("/"));
+            textView3.setText(wea1);
+            linearLayout.addView(textView3);
+        }
+        //温度折线图
+        int[] highs = new int[6];
+        int[] lows = new int[6];
+        for(int i = 0; i <6;i++)
+        {
+            highs[i] = Integer.parseInt(futureBeanList.get(i).getHigh());
+            lows[i] = Integer.parseInt(futureBeanList.get(i).getLow());
+        }
+        // 设置白天温度曲线
+        chartView .setTempDay(highs);
+        // 设置夜间温度曲线
+        chartView .setTempNight(lows);
+        chartView .invalidate();
+        //晚上的天气
+        for(int i = 0;i<6;i++)
+        {
+            //动态加载view
+            LinearLayout linearLayout = new LinearLayout(this);
+            LinearLayout.LayoutParams llParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT,1);
+            linearLayout.setLayoutParams(llParams);
+            linearLayout.setOrientation(LinearLayout.VERTICAL);
+            linearLayout.setPadding(10,10,10,10);
+            six_future_ll_night.addView(linearLayout);
+            //添加TextView
+            //设置宽高以及权重
+            LinearLayout.LayoutParams tvParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            TextView textView1 = new TextView(this);
+            //设置textview垂直居中
+            textView1.setGravity(Gravity.CENTER);
+            textView1.setLayoutParams(tvParams);
+            String text = futureBeanList.get(i).getText();
+            String wea2 = text.substring(text.indexOf("/")+1,text.length());
+            textView1.setText(wea2);
+            linearLayout.addView(textView1);
+            TextView textView2 = new TextView(this);
+            //设置textview垂直居中
+            textView2.setLayoutParams(tvParams);
+            textView2.setText(futureBeanList.get(i).getWind().replace("风力",""));
+            textView2.setGravity(Gravity.CENTER);
+            linearLayout.addView(textView2);
+        }
+        //生活指数
+        WeatherData.WeatherBean.TodayBean.SuggestionBean suggestionBean = weatherBean.getToday().getSuggestion();
+        desc1.setText(suggestionBean.getCar_washing().getBrief()+"");
+        desc2.setText(suggestionBean.getDressing().getBrief()+"");
+        desc3.setText(suggestionBean.getFlu().getBrief()+"");
+        desc4.setText(suggestionBean.getSport().getBrief()+"");
+        desc5.setText(suggestionBean.getTravel().getBrief()+"");
+        desc6.setText(suggestionBean.getUv().getBrief()+"");
     }
 
     public void getCityByCityName(String city) {
@@ -158,6 +259,7 @@ public class WeatherShowActivity extends AppCompatActivity implements View.OnCli
     private void showokDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(WeatherShowActivity.this);
         builder.setTitle("我的天");
+        builder.setCancelable(false);
         builder.setMessage("当前地区不存在");
         builder.setPositiveButton("重新选择", new DialogInterface.OnClickListener() {
             @Override
