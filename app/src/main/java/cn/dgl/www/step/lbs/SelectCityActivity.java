@@ -1,5 +1,6 @@
 package cn.dgl.www.step.lbs;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.res.AssetManager;
 import android.os.Bundle;
@@ -32,6 +33,7 @@ import cn.dgl.www.step.bean.CityInfoModel;
 import cn.dgl.www.step.bean.ProvinceInfoModel;
 import cn.dgl.www.step.contact.ContactAdapter;
 import cn.dgl.www.step.utils.AddrXmlParser;
+import cn.dgl.www.step.utils.DialogUtil;
 import cn.dgl.www.step.view.ClearEditText;
 import cn.dgl.www.step.view.NoScrollListView;
 
@@ -57,11 +59,12 @@ public class SelectCityActivity extends AppCompatActivity implements View.OnClic
     ArrayAdapter<String> arrayAdapter;
     private List<String> listView_temp_data = new ArrayList<String>();
     private TextView beijing,shanghai,shenzhen,guangzhou,hangzhou,chengdu,chongqing,xian,nanjing,zhengzhou,tianjin,wuhan;
-
+    ProgressDialog progressDialog;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.select_city);
+        DialogUtil.showProgressDialog(SelectCityActivity.this, "数据加载中....");
         readAddrDatas();
         initData();
         initView();
@@ -128,6 +131,7 @@ public class SelectCityActivity extends AppCompatActivity implements View.OnClic
                 return false;
             }
         });
+        DialogUtil.closeProgressDialog();
     }
 
     private void initListView() {
